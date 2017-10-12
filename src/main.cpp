@@ -1,8 +1,5 @@
 #include "API.h"
-#include <iomanip>
 #include <signal.h>
-#include <thread>
-#include <mutex>
 
 API api;
 void exit_handler(int s);
