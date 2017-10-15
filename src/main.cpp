@@ -5,11 +5,15 @@ API api;
 void exit_handler(int s);
 int main()
 {
+#ifdef _WIN32
+  signal(SIGINT, exit_handler);
+#else
   struct sigaction sigIntHandler;
   sigIntHandler.sa_handler = exit_handler;
   sigemptyset(&sigIntHandler.sa_mask);
   sigIntHandler.sa_flags = 0;
   sigaction(SIGINT, &sigIntHandler, NULL);
+#endif
 
   bool cont = true;
   printf("\033[2J");

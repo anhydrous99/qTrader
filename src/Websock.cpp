@@ -12,10 +12,7 @@ using namespace rapidjson;
 Websock::Websock(std::vector<std::string> channels, std::string product_id, std::string uri)
 {
   Channels = channels; Product_id = product_id; Uri = uri;
-  client.set_message_handler([this](web::websockets::client::websocket_incoming_message msg){message_handler(msg);});
-  client.connect(Uri).wait();
-  std::string sub = subscribe(true);
-  send_message(sub);
+  Connect();
 }
 Websock::~Websock()
 {
@@ -135,17 +132,18 @@ inline std::string Websock::subscribe(bool sub)
 void Websock::Connect()
 {
   client.set_message_handler([this](web::websockets::client::websocket_incoming_message msg){message_handler(msg);});
+#ifdef _WIN32
+  client.connect(web::uri(utility::conversions::to_string_t(Uri))).wait();
+#else
   client.connect(Uri).wait();
+#endif
   std::string sub = subscribe(true);
   send_message(sub);
 }
 void Websock::Connect(std::vector<std::string> channels, std::string product_id, std::string uri)
 {
   Channels = channels; Product_id = product_id; Uri = uri;
-  client.set_message_handler([this](web::websockets::client::websocket_incoming_message msg){message_handler(msg);});
-  client.connect(Uri).wait();
-  std::string sub = subscribe(true);
-  send_message(sub);
+  Connect();
 }
 void Websock::Disconnect()
 {
