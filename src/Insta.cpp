@@ -105,7 +105,7 @@ void API::Insta_Market_Buy()
 {
   string currency = Fiat_Currency();
   double balance = Get_Balance(currency);
-  string order_id = Place_Market_Order("sell", to_string(balance), "");
+  string order_id = Place_Market_Order("buy", to_string(balance), "");
   cout << "Placed Market Buy of " << to_bold(st_green) << fixed << setprecision(2) << balance << st_reset <<
           " " << Fiat_Currency() << endl;
 }
@@ -113,13 +113,12 @@ void API::Show_Balances()
 { 
   double fiat_balance, asset_balance;
   string fiat_curr = Fiat_Currency(), asset_curr = Asset_Currency();
-  std::future<double> midmarket_fut = std::async(std::launch::async, &API::Get_MidMarketPrice, this);
   Get_Balances(fiat_balance, asset_balance);
   cout << "Balance:       " << to_bold(st_green) << fixed << setprecision(2) << fiat_balance << 
           st_reset << " " << fiat_curr << endl;
   cout << "               " << to_bold(st_green) << fixed << setprecision(8) << asset_balance << 
           st_reset << " " << asset_curr << endl;
-  double midmark = midmarket_fut.get();
+  double midmark = sock.MidMarket_Price();
   cout << "Current Price: " << to_bold(st_cyan) << fixed << setprecision(3) << midmark << st_reset << 
           " " << fiat_curr << endl;
   cout << "Asset Price:   " << to_bold(st_yellow) << fixed << setprecision(2) << (midmark * asset_balance) <<
