@@ -20,9 +20,8 @@ string to_bold(string st_color)
 void API::Insta_Limit_Sell()
 {  
   string currency = Asset_Currency();
-  std::future<double> balance_fut = std::async(std::launch::async, &API::Get_Balance, this, currency);
   string price = to_string(sock.Best_Sell_Price());
-  double b_balance = balance_fut.get() * percent_transact / 100;
+  double b_balance = Get_Balance(currency) * percent_transact / 100;
   if (b_balance < 0.01)
   {
     cout << "\033[1;31mOrder size is too small. Minimum size is 0.01\033[0m\n";
@@ -57,9 +56,8 @@ void API::Insta_Limit_Sell()
 void API::Insta_Limit_Buy()
 {
   string currency = Fiat_Currency();
-  std::future<double> balance_fut = std::async(std::launch::async, &API::Get_Balance, this, currency);
   string price = to_string(sock.Best_Buy_Price());
-  double fiat_bal = balance_fut.get();
+  double fiat_bal = Get_Balance(currency);
   double b_balance = (fiat_bal * percent_transact) / (100 * stod(price));
   if (b_balance < 0.01)
   {
