@@ -22,7 +22,7 @@ void API::Insta_Limit_Sell()
   string currency = Asset_Currency();
   string price = to_string(sock.Best_Sell_Price());
   double b_balance = Get_Balance(currency) * percent_transact / 100;
-  if (b_balance < 0.01)
+  if (b_balance < 0.001)
   {
     cout << "\033[1;31mOrder size is too small. Minimum size is 0.01\033[0m\n";
     cout << "Your balance: " << to_bold(st_green) << fixed << setprecision(8) << 
@@ -59,7 +59,7 @@ void API::Insta_Limit_Buy()
   string price = to_string(sock.Best_Buy_Price());
   double fiat_bal = Get_Balance(currency);
   double b_balance = (fiat_bal * percent_transact) / (100 * stod(price));
-  if (b_balance < 0.01)
+  if (b_balance < 0.001)
   {
     cout << to_bold(st_red) << "Order size is too small. Minimum size is 0.01" << st_reset << endl;
     cout << "Your order size: " << to_bold(st_green) << fixed << setprecision(8) << 

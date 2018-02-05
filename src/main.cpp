@@ -26,6 +26,7 @@ int main()
     printf(" Press \033[32;1mB\033[0m to Market Buy using all fiat currency \n");
     printf(" Press d to get balances \n");
     printf(" Press o to Cancel All Orders\n");
+    printf(" Press c to Change Percentage of Balance to transact \n");
     printf(" Press x to Exit \n");
     printf("Choice: \n");
     char ch = 0;
@@ -52,6 +53,20 @@ int main()
         cout << "\033[36mDeleting all Orders.\033[0m\n";
         api.Delete_All_Orders();
         break;
+      case 'c':
+	{
+	  int perc;
+	  cout << "Enter amount in percentage: \n";
+	  cin >> perc;
+	  if (perc > 0 && perc < 100)
+	  {
+	    api.percent_transact = perc;
+            cout << "Percentage to transact is now " << perc << "%\n"; 
+	  }
+          else
+            cout << "Error: percentage can only be between 0 and 100\n";
+	  break;
+	}
       case 'X':
       case 'x':
         cont = false;
