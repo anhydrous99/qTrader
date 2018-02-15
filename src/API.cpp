@@ -123,6 +123,9 @@ string API::Place_Limit_Order(string side, string price, string size)
   v_size = StringRef(size.c_str());
   d.AddMember("size", v_size, allocator);
 
+  /* Gets the Order to be a maker and not a taker */
+  d.AddMember("post_only", true, allocator);
+
   /* creates string with json */
   StringBuffer strbuf;
   Writer<StringBuffer> writer(strbuf);
