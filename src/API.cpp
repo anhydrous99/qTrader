@@ -139,7 +139,6 @@ string API::Place_Limit_Order(string side, string price, string size)
   {
     assert(d_1["message"].IsString());
     printf("(Limit_Order) Message: %s\n", d_1["message"].GetString());
-    exit(EXIT_FAILURE);
   }
   return order_id;
 }
@@ -204,7 +203,6 @@ string API::Place_Market_Order(string side, string size, string funds)
   {
     assert(d_1["message"].IsString());
     printf("(Market_Order) Message: %s\n", d_1["message"].GetString());
-    exit(EXIT_FAILURE);
   }
   return order_id;
 }
@@ -273,7 +271,6 @@ string API::Place_Stop_Order(string side, string price, string size, string fund
   {
     assert(d_1["message"].IsString());
     printf("(Stop_Order) Message: %s\n", d_1["message"].GetString());
-    exit(EXIT_FAILURE);
   }
   return order_id;
 }
