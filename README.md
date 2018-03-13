@@ -3,7 +3,7 @@
 
 ```
 sudo apt update
-sudo apt install build-essential git cmake rapidjson-dev libcrypto++-dev libcurl4-openssl-dev libcpprest-dev
+sudo apt install build-essential git cmake rapidjson-dev libcrypto++-dev libcurl4-openssl-dev libcpprest-dev -r
 git clone https://github.com/anhydrous99/qTrader
 mkdir qTrader/build && cd qTrader/build
 cmake ..
