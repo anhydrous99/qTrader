@@ -1,6 +1,5 @@
 #include "API.h"
 #include <iomanip>
-#include <cmath>
 #include <chrono>
 #include <future>
 

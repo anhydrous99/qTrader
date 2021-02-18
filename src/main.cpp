@@ -1,5 +1,5 @@
 #include "API.h"
-#include <signal.h>
+#include <csignal>
 
 API api;
 void exit_handler(int s);

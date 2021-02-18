@@ -1,11 +1,11 @@
 #include "API.h"
 #include <fstream>
 #include <sys/stat.h>
-#include "curl/curl.h"
-#include "rapidjson/document.h"
-#include "rapidjson/writer.h"
-#include "rapidjson/prettywriter.h"
-#include "rapidjson/stringbuffer.h"
+#include <curl/curl.h>
+#include <rapidjson/document.h>
+#include <rapidjson/writer.h>
+#include <rapidjson/prettywriter.h>
+#include <rapidjson/stringbuffer.h>
 
 using namespace rapidjson;
 
