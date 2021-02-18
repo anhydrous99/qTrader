@@ -8,6 +8,7 @@
 #include <rapidjson/stringbuffer.h>
 
 using namespace rapidjson;
+using namespace std;
 
 /* Used by API::Call to put websource into a string type */
 static size_t WriteCallback(void *contents, size_t size, size_t nmemb, void *userp) {

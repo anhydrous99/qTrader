@@ -1,18 +1,19 @@
 #include <iostream>
 #include <string>
 
-using namespace std;
-
-class Auth
-{
+class Auth {
 public:
-  string Key;
-  string Secret;
-  string Passphrase;
-  string Sign(string time_stamp, string method, string path, string body);
-  string Sign(string time_stamp, string method, string path);
-  string GetTimestamp();
+    std::string Key;
+    std::string Secret;
+    std::string Passphrase;
 
-  Auth() = default;
-  Auth(string key, string secret, string passphrase);
+    std::string Sign(std::string time_stamp, std::string method, std::string path, std::string body);
+
+    std::string Sign(std::string time_stamp, std::string method, std::string path);
+
+    std::string GetTimestamp();
+
+    Auth() = default;
+
+    Auth(std::string key, std::string secret, std::string passphrase);
 };

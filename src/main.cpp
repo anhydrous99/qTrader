@@ -1,6 +1,8 @@
 #include "API.h"
 #include <csignal>
 
+using namespace std;
+
 API api;
 
 void exit_handler(int s);
