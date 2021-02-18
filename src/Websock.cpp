@@ -1,6 +1,5 @@
 #include "Websock.h"
 #include <mutex>
-#include <iostream>
 #include <algorithm>
 #include <string>
 #include <rapidjson/document.h>

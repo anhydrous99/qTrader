@@ -17,10 +17,12 @@ hunter_add_package(CURL)
 find_package(RapidJSON CONFIG REQUIRED)
 find_package(OpenSSL REQUIRED)
 find_package(CURL CONFIG REQUIRED)
+find_package(Casablanca)
 
 set(CMAKE_CXX_STANDARD 11)
+include_directories(${CASABLANCA_INCLUDE_DIR})
 include_directories(include)
 file(GLOB SOURCES "src/*.cpp")
 add_executable(qTrader ${SOURCES})
 
-target_link_libraries(qTrader CURL::libcurl OpenSSL::SSL OpenSSL::Crypto)
+target_link_libraries(qTrader CURL::libcurl OpenSSL::SSL OpenSSL::Crypto ${CASABLANCA_LIBRARIES})

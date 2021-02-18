@@ -30,7 +30,7 @@ public:
   void Set_Uri(std::string uri);
   void Set_Data(std::vector<std::string> channels, std::string product_id, std::string uri);
   Websock(std::vector<std::string> channels, std::string product_id, std::string uri);
-  Websock() {}
+  Websock() = default;
   ~Websock();
 };
 

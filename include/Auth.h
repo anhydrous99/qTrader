@@ -13,6 +13,6 @@ public:
   string Sign(string time_stamp, string method, string path);
   string GetTimestamp();
 
-  Auth() {}
+  Auth() = default;
   Auth(string key, string secret, string passphrase);
 };
