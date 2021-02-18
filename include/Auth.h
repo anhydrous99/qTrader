@@ -7,11 +7,11 @@ public:
     std::string Secret;
     std::string Passphrase;
 
-    std::string Sign(std::string time_stamp, std::string method, std::string path, std::string body);
+    std::string Sign(const std::string& time_stamp, const std::string& method, const std::string& path, const std::string& body);
 
-    std::string Sign(std::string time_stamp, std::string method, std::string path);
+    std::string Sign(const std::string& time_stamp, const std::string& method, const std::string& path);
 
-    std::string GetTimestamp();
+    static std::string GetTimestamp();
 
     Auth() = default;
 

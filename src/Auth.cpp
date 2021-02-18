@@ -1,20 +1,10 @@
 #include "Auth.h"
-#include "cryptopp/cryptlib.h"
-#include "cryptopp/hmac.h"
-#include "cryptopp/sha.h"
-#include "cryptopp/base64.h"
-#include "cryptopp/filters.h"
 
-using CryptoPP::Exception;
-using CryptoPP::HMAC;
-using CryptoPP::SHA256;
-using CryptoPP::Base64Decoder;
-using CryptoPP::Base64Encoder;
-using CryptoPP::StringSink;
-using CryptoPP::StringSource;
-using CryptoPP::HashFilter;
+#include <utility>
 
-string Auth::Sign(string time_stamp, string method, string path, string body)
+using namespace std;
+
+string Auth::Sign(const string& time_stamp, const string& method, const string& path, const string& body)
 {
   string mac, encoded, key;
   string plain = time_stamp + method + path + body;
@@ -45,7 +35,7 @@ string Auth::Sign(string time_stamp, string method, string path, string body)
   encoded.erase(44, 1);
   return encoded;
 }
-string Auth::Sign(string time_stamp, string method, string path)
+string Auth::Sign(const string& time_stamp, const string& method, const string& path)
 {
   return Sign(time_stamp, method, path, "");
 }
@@ -55,4 +45,4 @@ string Auth::GetTimestamp()
   return to_string(t);
 }
 Auth::Auth(string key, string secret, string passphrase)
-{ Key = key; Secret = secret; Passphrase = passphrase; }
+{ Key = std::move(key); Secret = std::move(secret); Passphrase = std::move(passphrase); }

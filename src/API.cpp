@@ -31,7 +31,7 @@ string API::Call(const string &method, bool authed, const string &path, const st
         curl_easy_setopt(curl, CURLOPT_SSL_VERIFYHOST, 0L);
         chunk = curl_slist_append(chunk, "Content-Type: application/json");
         if (authed) {
-            string time_stamp = auth.GetTimestamp();
+            string time_stamp = Auth::GetTimestamp();
             string sign = auth.Sign(time_stamp, method, path, body);
             chunk = curl_slist_append(chunk, ("CB-ACCESS-KEY: " + auth.Key).c_str());
             chunk = curl_slist_append(chunk, ("CB-ACCESS-SIGN: " + sign).c_str());
@@ -48,8 +48,7 @@ string API::Call(const string &method, bool authed, const string &path, const st
         res = curl_easy_perform(curl);
         /* Check for errors */
         if (res != CURLE_OK)
-            printf("curl_easy_perform() failed: %s\n",
-                   curl_easy_strerror(res));
+            cerr << "curl_easy_perform() failed: " << curl_easy_strerror(res) << endl;
 
         /* always cleanup */
         curl_easy_cleanup(curl);
@@ -130,7 +129,7 @@ string API::Place_Limit_Order(const string &side, const string &price, const str
     }
     if (d_1.HasMember("message")) {
         assert(d_1["message"].IsString());
-        printf("(Limit_Order) Message: %s\n", d_1["message"].GetString());
+        cerr << "(Limit_Order) Message: " << d_1["message"].GetString() << endl;
     }
     return order_id;
 }
@@ -168,7 +167,7 @@ string API::Place_Market_Order(const string &side, const string &size, const str
             d.AddMember("funds", v_funds, allocator);
         }
     } else {
-        printf("\033[31mError:\033[0m Either both size and funds are empty or filled.\n");
+        cerr << "\033[31mError:\033[0m Either both size and funds are empty or filled.\n";
         return "";
     }
 
@@ -185,7 +184,7 @@ string API::Place_Market_Order(const string &side, const string &size, const str
     }
     if (d_1.HasMember("message")) {
         assert(d_1["message"].IsString());
-        printf("(Market_Order) Message: %s\n", d_1["message"].GetString());
+        cerr << "(Market_Order) Message: " << d_1["message"].GetString() << endl;
     }
     return order_id;
 }
@@ -228,7 +227,7 @@ string API::Place_Stop_Order(const string &side, const string &price, const stri
             d.AddMember("funds", v_funds, allocator);
         }
     } else {
-        printf("\033[31mError:\033[0m Either both size and funds are empty or filled.\n");
+        cerr << "\033[31mError:\033[0m Either both size and funds are empty or filled.\n";
         return "";
     }
 
@@ -245,7 +244,7 @@ string API::Place_Stop_Order(const string &side, const string &price, const stri
     }
     if (d_1.HasMember("message")) {
         assert(d_1["message"].IsString());
-        printf("(Stop_Order) Message: %s\n", d_1["message"].GetString());
+        cerr << "(Stop_Order) Message: " << d_1["message"].GetString() << endl;
     }
     return order_id;
 }
@@ -257,7 +256,7 @@ string API::Get_AccountID(const string &currency) {
     d.Parse(st.c_str());
     if (d.HasMember("message")) {
         assert(d["message"].IsString());
-        printf("(Get_AccountID) Message: %s\n", d["message"].GetString());
+        cerr << "(Get_AccountID) Message: " << d["message"].GetString() << endl;
         return "";
     }
     assert(d.IsArray());
@@ -280,7 +279,7 @@ string API::Get_AccountID(const string &currency, string &balance) {
     d.Parse(st.c_str());
     if (d.HasMember("message")) {
         assert(d["message"].IsString());
-        printf("(Get_AccountID) Message: %s\n", d["message"].GetString());
+        cerr << "(Get_AccountID) Message: " << d["message"].GetString() << endl;
         return "";
     }
     assert(d.IsArray());
@@ -306,7 +305,7 @@ string API::Get_Buy_Price() {
     d.Parse(st.c_str());
     if (d.HasMember("message")) {
         assert(d["message"].IsString());
-        printf("(Get_Buy_Price) Message: %s\n", d["message"].GetString());
+        cerr << "(Get_Buy_Price) Message: " << d["message"].GetString() << endl;
     }
     if (d.HasMember("bids")) {
         assert(d["bids"].IsArray());
@@ -326,7 +325,7 @@ string API::Get_Sell_Price() {
     d.Parse(st.c_str());
     if (d.HasMember("message")) {
         assert(d["message"].IsString());
-        printf("(Get_Sell_Price) Message: %s\n", d["message"].GetString());
+        cerr << "(Get_Sell_Price) Message: " << d["message"].GetString() << endl;
         return "";
     }
     if (d.HasMember("asks")) {
@@ -347,7 +346,7 @@ double API::Get_MidMarketPrice() {
     d.Parse(st.c_str());
     if (d.HasMember("message")) {
         assert(d["message"].IsString());
-        printf("(Get_MidMarketPrice) Message: %s\n", d["message"].GetString());
+        cerr << "(Get_MidMarketPrice) Message: " << d["message"].GetString() << endl;
         return 0;
     }
     if (d.HasMember("bids") && d.HasMember("asks")) {
@@ -430,7 +429,7 @@ void API::Get_Balances(double &fiat_balance, double &asset_balance) {
 
 // Constructor and Destructor Stuff
 bool exists(const string &name) {
-    struct stat buffer;
+    struct stat buffer{};
     return (stat(name.c_str(), &buffer) == 0);
 }
 
@@ -465,8 +464,8 @@ void Generate_Ex_Conf() {
     file.open("conf.json");
     file << json;
     file.close();
-    printf("\033[31mError:\033[0m conf.json not found or was missing a string.\n");
-    printf("       An example conf.json has been generated.\n");
+    cerr << "\033[31mError:\033[0m conf.json not found or was missing a string.\n";
+    cerr << "       An example conf.json has been generated.\n";
     exit(EXIT_FAILURE);
 }
 
@@ -507,7 +506,7 @@ void Get_Conf(string &uri, string &socket_uri, string &product_id, int &interval
     interval = d["reaction_interval"].GetInt();
     perc_trans = d["percent_transact"].GetInt();
     if (!((0 < perc_trans) & (perc_trans <= 100))) {
-        printf("\033[31mError:\033[0m percent_transact in conf.json can only be between 0 and 100.\n");
+        cerr << "\033[31mError:\033[0m percent_transact in conf.json can only be between 0 and 100.\n";
         exit(EXIT_FAILURE);
     }
     Auth tmp(d["Key"].GetString(), d["Secret"].GetString(), d["Passphrase"].GetString());
