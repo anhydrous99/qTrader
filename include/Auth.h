@@ -7,9 +7,9 @@ public:
     std::string Secret;
     std::string Passphrase;
 
-    std::string Sign(const std::string& time_stamp, const std::string& method, const std::string& path, const std::string& body);
+    std::string Sign(const std::string& time_stamp, const std::string& method, const std::string& path, const std::string& body) const;
 
-    std::string Sign(const std::string& time_stamp, const std::string& method, const std::string& path);
+    std::string Sign(const std::string& time_stamp, const std::string& method, const std::string& path) const;
 
     static std::string GetTimestamp();
 

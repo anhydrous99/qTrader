@@ -11,11 +11,11 @@ project(qTrader)
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/Modules")
 
 hunter_add_package(RapidJSON)
-hunter_add_package(OpenSSL)
 hunter_add_package(CURL)
+hunter_add_package(cryptopp)
 
 find_package(RapidJSON CONFIG REQUIRED)
-find_package(OpenSSL REQUIRED)
+find_package(cryptopp CONFIG REQUIRED)
 find_package(CURL CONFIG REQUIRED)
 find_package(Casablanca)
 
@@ -25,4 +25,4 @@ include_directories(include)
 file(GLOB SOURCES "src/*.cpp")
 add_executable(qTrader ${SOURCES})
 
-target_link_libraries(qTrader CURL::libcurl OpenSSL::SSL OpenSSL::Crypto ${CASABLANCA_LIBRARIES})
+target_link_libraries(qTrader CURL::libcurl OpenSSL::SSL OpenSSL::Crypto cryptopp-static ${CASABLANCA_LIBRARIES})
