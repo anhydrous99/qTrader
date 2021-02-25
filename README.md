@@ -1,4 +1,7 @@
 # qTrader
+
+This project has become too cumbersome and lacks tests. I'm starting over. Look for the better project down the line.
+
 ### Build Ubuntu
 
 ```

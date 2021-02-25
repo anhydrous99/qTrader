@@ -438,9 +438,9 @@ void Generate_Ex_Conf() {
     d.SetObject();
     rapidjson::Document::AllocatorType &allocator = d.GetAllocator();
     /* Adds uri */
-    d.AddMember("uri", "https://api.gdax.com", allocator);
+    d.AddMember("uri", "https://api.pro.coinbase.com", allocator);
     /* add socket_uri */
-    d.AddMember("socket_uri", "wss://ws-feed.gdax.com", allocator);
+    d.AddMember("socket_uri", "wss://ws-feed.pro.coinbase.com", allocator);
     /* Adds product_id example */
     d.AddMember("product_id", "BTC-USD", allocator);
     /* Adds reaction_interval
